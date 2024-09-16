@@ -12,7 +12,7 @@ public class ProductContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("users");
+        modelBuilder.HasDefaultSchema("products");
 
         modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
     }

@@ -17,4 +17,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Products.Infrastructure\MyShop.ModularMonolith.Modules.Products.Infrastructure.csproj" />
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Users.Infrastructure\MyShop.ModularMonolith.Modules.Users.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
