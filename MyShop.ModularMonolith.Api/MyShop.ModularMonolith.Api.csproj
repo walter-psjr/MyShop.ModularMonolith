@@ -18,7 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Products.Api\MyShop.ModularMonolith.Modules.Products.Api.csproj" />
       <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Products.Infrastructure\MyShop.ModularMonolith.Modules.Products.Infrastructure.csproj" />
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Users.Api\MyShop.ModularMonolith.Modules.Users.Api.csproj" />
       <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Users.Infrastructure\MyShop.ModularMonolith.Modules.Users.Infrastructure.csproj" />
     </ItemGroup>
 
