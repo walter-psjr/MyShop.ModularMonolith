@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MassTransit.Abstractions" Version="8.2.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Products.Domain\MyShop.ModularMonolith.Modules.Products.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
