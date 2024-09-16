@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyShop.ModularMonolith.Modules.Users.Application;
+using MyShop.ModularMonolith.Modules.Users.Domain.Users;
+using MyShop.ModularMonolith.Modules.Users.Infrastructure.Repositories;
 
 namespace MyShop.ModularMonolith.Modules.Users.Infrastructure.Extensions;
 
@@ -17,6 +20,10 @@ public static class InfrastructureServiceCollectionExtensions
                 x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "users");
             });
         });
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

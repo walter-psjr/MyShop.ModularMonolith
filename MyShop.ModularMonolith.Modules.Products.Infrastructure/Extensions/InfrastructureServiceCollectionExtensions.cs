@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyShop.ModularMonolith.Modules.Products.Application;
 using MyShop.ModularMonolith.Modules.Products.Domain.Products;
 using MyShop.ModularMonolith.Modules.Products.Infrastructure.Repositories;
 
@@ -20,6 +21,8 @@ public static class InfrastructureServiceCollectionExtensions
             });
         });
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
         services.AddScoped<IProductRepository, ProductRepository>();
 
         return services;

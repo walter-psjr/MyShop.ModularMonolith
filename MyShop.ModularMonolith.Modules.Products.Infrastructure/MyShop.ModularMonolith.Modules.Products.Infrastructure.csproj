@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Products.Application\MyShop.ModularMonolith.Modules.Products.Application.csproj" />
       <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Products.Domain\MyShop.ModularMonolith.Modules.Products.Domain.csproj" />
     </ItemGroup>
 
