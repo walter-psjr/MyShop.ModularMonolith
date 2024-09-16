@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyShop.ModularMonolith.Modules.Products.Domain.Products;
+using MyShop.ModularMonolith.Modules.Products.Infrastructure.Repositories;
 
 namespace MyShop.ModularMonolith.Modules.Products.Infrastructure.Extensions;
 
@@ -17,6 +19,8 @@ public static class InfrastructureServiceCollectionExtensions
                 x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "products");
             });
         });
+
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         return services;
     }

@@ -1,4 +1,5 @@
 using MyShop.ModularMonolith.Modules.Products.Api.Controllers;
+using MyShop.ModularMonolith.Modules.Products.Application.GetAllProducts;
 using MyShop.ModularMonolith.Modules.Products.Infrastructure.Extensions;
 using MyShop.ModularMonolith.Modules.Users.Api.Controllers;
 using MyShop.ModularMonolith.Modules.Users.Infrastructure.Extensions;
@@ -12,6 +13,11 @@ builder.Services.AddControllers()
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddProductsInfrastructure(builder.Configuration);
+
+builder.Services.AddMediatR(configuration =>
+{
+    configuration.RegisterServicesFromAssemblies(typeof(GetAllProductsQuery).Assembly);
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

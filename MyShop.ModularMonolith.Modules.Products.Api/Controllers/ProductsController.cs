@@ -1,4 +1,7 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyShop.ModularMonolith.Modules.Products.Application.CreateProduct;
+using MyShop.ModularMonolith.Modules.Products.Application.GetAllProducts;
 using MyShop.ModularMonolith.Modules.Products.Domain.Products;
 
 namespace MyShop.ModularMonolith.Modules.Products.Api.Controllers;
@@ -7,15 +10,26 @@ namespace MyShop.ModularMonolith.Modules.Products.Api.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult GetAll()
+    private readonly IMediator _mediator;
+
+    public ProductsController(IMediator mediator)
     {
-        var products = new List<Product>
-        {
-            new(Guid.NewGuid(), "MacBook", 2399),
-            new(Guid.NewGuid(), "iPhone", 700)
-        };
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var products = await _mediator.Send(new GetAllProductsQuery());
 
         return Ok(products);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
+    {
+        await _mediator.Send(new CreateProductCommand(request.Name, request.Price));
+
+        return Ok();
     }
 }
