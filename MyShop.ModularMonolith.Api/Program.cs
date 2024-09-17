@@ -1,7 +1,9 @@
 using MassTransit;
 using MyShop.ModularMonolith.Modules.Products.Api.Controllers;
+using MyShop.ModularMonolith.Modules.Products.Application;
 using MyShop.ModularMonolith.Modules.Products.Application.GetAllProducts;
 using MyShop.ModularMonolith.Modules.Products.Domain.Products;
+using MyShop.ModularMonolith.Modules.Products.Infrastructure;
 using MyShop.ModularMonolith.Modules.Products.Infrastructure.Extensions;
 using MyShop.ModularMonolith.Modules.Users.Api.Controllers;
 using MyShop.ModularMonolith.Modules.Users.Application;
@@ -30,6 +32,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(configurator =>
 {
     configurator.AddConsumer<ProductCreatedDomainEventConsumer>();
+
+    configurator.AddConsumer<UserCreatedDomainEventConsumer>();
+    
+    // configurator.AddConfigureEndpointsCallback((context, name, cfg) =>
+    // {
+    //     Console.WriteLine($"************* {name}");
+    //     cfg.UseEntityFrameworkOutbox<ProductContext>(context);
+    // });
     
     configurator.UsingRabbitMq((context, cfg) =>
     {

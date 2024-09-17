@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using MyShop.ModularMonolith.Modules.Users.Domain.Users;
 using MyShop.ModularMonolith.Modules.Users.Infrastructure.EntityTypeConfigurations;
@@ -15,5 +16,9 @@ public class UserContext : DbContext
         modelBuilder.HasDefaultSchema("users");
 
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+        
+        modelBuilder.AddInboxStateEntity();
+        modelBuilder.AddOutboxMessageEntity();
+        modelBuilder.AddOutboxStateEntity();
     }
 }

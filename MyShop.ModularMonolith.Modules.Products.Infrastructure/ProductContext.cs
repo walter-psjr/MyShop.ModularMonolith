@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using MyShop.ModularMonolith.Modules.Products.Domain.Products;
 using MyShop.ModularMonolith.Modules.Products.Infrastructure.EntityTypeConfigurations;
@@ -15,5 +16,9 @@ public class ProductContext : DbContext
         modelBuilder.HasDefaultSchema("products");
 
         modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
+        
+        modelBuilder.AddInboxStateEntity();
+        modelBuilder.AddOutboxMessageEntity();
+        modelBuilder.AddOutboxStateEntity();
     }
 }
