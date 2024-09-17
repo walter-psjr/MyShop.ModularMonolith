@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,11 @@ public static class InfrastructureServiceCollectionExtensions
                 x.MigrationsAssembly(typeof(UserContext).Assembly.FullName);
                 x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "users");
             });
+        });
+        
+        services.AddMediatR(mediatRConfiguration =>
+        {
+            mediatRConfiguration.RegisterServicesFromAssemblies(Assembly.Load("MyShop.ModularMonolith.Modules.Users.Application"));
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

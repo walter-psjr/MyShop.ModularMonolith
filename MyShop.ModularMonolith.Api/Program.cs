@@ -6,15 +6,17 @@ using MyShop.ModularMonolith.Modules.Products.Domain.Products;
 using MyShop.ModularMonolith.Modules.Products.Infrastructure;
 using MyShop.ModularMonolith.Modules.Products.Infrastructure.Extensions;
 using MyShop.ModularMonolith.Modules.Users.Api.Controllers;
+using MyShop.ModularMonolith.Modules.Users.Api.Extensions;
 using MyShop.ModularMonolith.Modules.Users.Application;
 using MyShop.ModularMonolith.Modules.Users.Application.Users.GetAllUsers;
+using MyShop.ModularMonolith.Modules.Users.Infrastructure;
 using MyShop.ModularMonolith.Modules.Users.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(UsersController).Assembly)
+    .AddUserModuleControllers()
     .AddApplicationPart(typeof(ProductsController).Assembly);
 
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -31,14 +33,28 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMassTransit(configurator =>
 {
+    configurator.AddEntityFrameworkOutbox<ProductContext>(c =>
+    {
+        c.UsePostgres();
+        
+        c.UseBusOutbox();
+    });
+    
+    configurator.AddEntityFrameworkOutbox<UserContext>(c =>
+    {
+        c.UsePostgres();
+        
+        c.UseBusOutbox();
+    });
+    
     configurator.AddConsumer<ProductCreatedDomainEventConsumer>();
 
     configurator.AddConsumer<UserCreatedDomainEventConsumer>();
     
     // configurator.AddConfigureEndpointsCallback((context, name, cfg) =>
     // {
-    //     Console.WriteLine($"************* {name}");
     //     cfg.UseEntityFrameworkOutbox<ProductContext>(context);
+    //     cfg.UseEntityFrameworkOutbox<UserContext>(context);
     // });
     
     configurator.UsingRabbitMq((context, cfg) =>
@@ -47,6 +63,20 @@ builder.Services.AddMassTransit(configurator =>
         {
             h.Username("myshopuser");
             h.Password("myshoppassword");
+        });
+        
+        cfg.ReceiveEndpoint("products", c =>
+        {
+            c.UseEntityFrameworkOutbox<ProductContext>(context);
+            
+            c.ConfigureConsumer<ProductCreatedDomainEventConsumer>(context);
+        });
+        
+        cfg.ReceiveEndpoint("users", c =>
+        {
+            c.UseEntityFrameworkOutbox<UserContext>(context);
+            
+            c.ConfigureConsumer<UserCreatedDomainEventConsumer>(context);
         });
         
         cfg.ConfigureEndpoints(context);

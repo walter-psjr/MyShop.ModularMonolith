@@ -13,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Users.Application\MyShop.ModularMonolith.Modules.Users.Application.csproj" />
       <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Users.Domain\MyShop.ModularMonolith.Modules.Users.Domain.csproj" />
+      <ProjectReference Include="..\MyShop.ModularMonolith.Modules.Users.Infrastructure\MyShop.ModularMonolith.Modules.Users.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
